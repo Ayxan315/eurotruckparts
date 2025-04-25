@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EuroTruck Parts</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 20px; }
+    .container { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
+    input[type="text"] { width: 100%; padding: 10px; margin: 10px 0; border-radius: 6px; border: 1px solid #ccc; font-size: 16px; }
+    .part { padding: 12px; border-bottom: 1px solid #eee; line-height: 1.6; }
+    .part:last-child { border-bottom: none; }
+    .title { font-size: 28px; font-weight: bold; margin-bottom: 20px; text-align: center; color: #1a73e8; }
+    .oem-code { font-weight: bold; color: #333; font-size: 18px; }
+    .no-results { text-align: center; color: #888; margin-top: 20px; font-style: italic; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="title">EuroTruck Parts</div>
+    <input type="text" id="search" placeholder="OEM kodu ilə axtar..." onkeyup="searchParts()" />
+    <div id="results"></div>
+  </div>
+
+  <script>
+    const parts = [
+      { oem: "123456", name_az: "Hava quruducu", name_en: "Air dryer", brand: "Mercedes", model: "Atego", years: "2005-2013" },
+      { oem: "789012", name_az: "Hava klapanı", name_en: "Air valve", brand: "MAN", model: "TGA", years: "2001-2008" },
+      { oem: "345678", name_az: "Su nasosu", name_en: "Water pump", brand: "DAF", model: "XF", years: "2007-2014" },
+      { oem: "998877", name_az: "Hava balonu", name_en: "Air tank", brand: "Mercedes", model: "Actros MP2", years: "2002-2008" },
+      { oem: "112233", name_az: "Alternator", name_en: "Alternator", brand: "Iveco", model: "Eurocargo", years: "2008-2015" },
+      { oem: "445566", name_az: "Debriyaj dəsti", name_en: "Clutch kit", brand: "DAF", model: "CF", years: "2005-2012" },
+      { oem: "667788", name_az: "Starter", name_en: "Starter", brand: "MAN", model: "TGL", years: "2007-2014" },
+      { oem: "334455", name_az: "Turbin", name_en: "Turbocharger", brand: "Mercedes", model: "Axor", years: "2001-2009" },
+      { oem: "223344", name_az: "Yağ filteri", name_en: "Oil filter", brand: "Iveco", model: "Daily", years: "2010-2018" },
+      { oem: "556677", name_az: "Gərginlik tənzimləyici", name_en: "Voltage regulator", brand: "MAN", model: "TGS", years: "2008-2015" }
+      // Əlavə 20 məhsulu burada daxil etmək olar...
+    ];
+
+    function searchParts() {
+      const query = document.getElementById('search').value.toLowerCase();
+      const resultsDiv = document.getElementById('results');
+      resultsDiv.innerHTML = '';
+      const filtered = parts.filter(part => part.oem.toLowerCase().includes(query));
+      if (filtered.length === 0) {
+        resultsDiv.innerHTML = '<div class="no-results">Nəticə tapılmadı.</div>';
+        return;
+      }
+      filtered.forEach(part => {
+        resultsDiv.innerHTML += `
+          <div class="part">
+            <div class="oem-code">OEM: ${part.oem}</div>
+            <div>${part.name_az} / ${part.name_en}</div>
+            <div>Marka: ${part.brand}</div>
+            <div>Model: ${part.model}</div>
+            <div>İllər: ${part.years}</div>
+          </div>
+        `;
+      });
+    }
+  </script>
+</body>
+</html>
